@@ -1,7 +1,7 @@
 <template>
     <v-container class="container">
    
-<!--        <pre>{{$data}}</pre> -->
+    <!--    <pre>{{$data}}</pre>  -->
        <v-row class="estilocompleto" >
        
         <v-bottom-navigation
@@ -115,7 +115,7 @@
                   </v-row>
                   <v-row  style="max-width: 500px; margin-left: 20px; ">
                     <ul v-for="(h5p,i) in datos.actividadH5p" :key="i" style="font-weight: bold;color:blue;text-decoration: underline;font-size:20px">
-                  <a> <li @click="verh5p()">  <b-icon color="green"  icon="pencil-square" font-scale="1"></b-icon> {{h5p.nombre}}</li>
+                  <a> <li @click="prueba(i)">  <b-icon color="green"  icon="pencil-square" font-scale="1"></b-icon> {{h5p.nombre}}</li>
                   </a>
                  </ul>
                   </v-row>
@@ -167,10 +167,10 @@
         </v-card>
       </v-dialog>-->
       <vs-dialog prevent-close overflow-hidden full-screen v-model="activado" class="dialogo">
-       <div class="actividad">
+<div class="actividad"> 
       <!--   <div  id="actividad1" ></div>  -->  
-      <iframe id=""></iframe>
-      </div>       
+      <iframe :src="enlace" width="100%" height="570px"></iframe>
+    </div>      
       </vs-dialog>
      
      
@@ -178,21 +178,22 @@
     
   </template>
 <script>
-import axios from 'axios'
+//import axios from 'axios'
 //import { H5P } from 'h5p-standalone';
 export default{
 data() {
   return {
     activado:false,
     h5pPath: `/h5p/`,
-    datos:[]
+    datos:[],
+    enlace:null
   }
 },
 mounted() {
   this.datos= this.$store.state.claseEstudiante
       console.log(this.datos)
       this.cadena()
-      this.prueba()
+     // this.prueba()
 },
 methods: {
 
@@ -211,33 +212,16 @@ methods: {
   this.datos.videos[index].url='https://www.youtube.com/embed/'+id[0]
     }
   },
-/*   prueba(i){
+ prueba(i){
+    this.enlace=this.datos.actividadH5p[i].h5p
+    //alert(this.enlace)
     this.activado=true
-    setTimeout(this.despliegaH5p (i),1000);
-   
     
-  }, */
- despliegaH5p(p){
+  /*   setTimeout(this.despliegaH5p (i),1000);
+    */
     
-/*     const el = document.getElementById("actividad1");
+  }, 
 
-this.h5pPath = '/h5p/actividad3' 
-const options = {
-    h5pJsonPath: this.h5pPath,
-    frameJs: "/h5p/frame.bundle.js",
-    frameCss: "/h5p/styles/h5p.css",
-};*/
-  // new  H5P(el, options); 
-   
-     const h5p={ruta:this.datos.actividadH5p[p].h5p}
-    axios.post('http://localhost:3001/despliegueH5p',h5p)
-       .then((response) => {
-        response
-        console.log(response)
-         
-         })
-   
-  }
 },
 }
 </script>
